@@ -1,0 +1,6 @@
+[
+  {
+    "name": "ARM Toolchain",
+    "toolchainFile": "arm-toolchain.cmake"
+  }
+]

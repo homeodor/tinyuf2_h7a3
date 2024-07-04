@@ -61,7 +61,9 @@
 
 #define SPI_FLASH_SIZE    8*1024*1024 // 8Mbytes
 #define QSPI_FLASH_SIZE   8*1024*1024 // 8Mbytes
+#if !defined(PFLASH_SIZE)
 #define PFLASH_SIZE       128*1024 // 128Kbytes
+#endif
 #define AXISRAM_SIZE      256*1024 // 512Kbytes
 
 #define SPI_FLASH_OFFS  0U
@@ -71,7 +73,7 @@
 
 #define IS_SPI_ADDR(x)      (((x) >= SPI_BASE_ADDR) && ((x) < (SPI_BASE_ADDR + SPI_FLASH_SIZE)))
 #define IS_QSPI_ADDR(x)     (((x) >= QSPI_BASE_ADDR) && ((x) < (QSPI_BASE_ADDR + QSPI_FLASH_SIZE)))
-#define IS_PFLASH_ADDR(x)   (((x) >= (PFLASH_BASE_ADDR + PFLASH_SIZE/2)) && ((x) < (PFLASH_BASE_ADDR + PFLASH_SIZE)))
+#define IS_PFLASH_ADDR(x)   (((x) >= (PFLASH_BASE_ADDR + PFLASH_OFFS)) && ((x) < (PFLASH_BASE_ADDR + PFLASH_SIZE)))
 #define IS_AXISRAM_ADDR(x)  (((x) >= (AXISRAM_BASE_ADDR + AXISRAM_OFFS)) && ((x) < (AXISRAM_BASE_ADDR + AXISRAM_SIZE)))
 
 #define SET_BOOT_ADDR(x) board_save_app_start_address(x)

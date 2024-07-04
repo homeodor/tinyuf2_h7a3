@@ -64,22 +64,22 @@ void board_dfu_init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Alternate = GPIO_AF10_OTG2_HS;
+  GPIO_InitStruct.Alternate = GPIO_AF10_OTG1_HS;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   // https://community.st.com/s/question/0D50X00009XkYZLSA3/stm32h7-nucleo-usb-fs-cdc
   // TODO: Board init actually works fine without this line.
   HAL_PWREx_EnableUSBVoltageDetector();
-  __HAL_RCC_USB2_OTG_FS_CLK_ENABLE();
+  __HAL_RCC_USB_OTG_HS_CLK_ENABLE();
 
   // No VBUS Sensing capabilities on the board
   // TODO: add a compile switch and Vbus sensing capability
   // Disable Vbus sense (B device) via pin PA9
-  USB_OTG_FS->GCCFG &= ~USB_OTG_GCCFG_VBDEN;
+  USB_OTG_HS->GCCFG &= ~USB_OTG_GCCFG_VBDEN;
 
   // B-peripheral session valid override enable
-  USB_OTG_FS->GOTGCTL |= USB_OTG_GOTGCTL_BVALOEN;
-  USB_OTG_FS->GOTGCTL |= USB_OTG_GOTGCTL_BVALOVAL;
+  USB_OTG_HS->GOTGCTL |= USB_OTG_GOTGCTL_BVALOEN;
+  USB_OTG_HS->GOTGCTL |= USB_OTG_GOTGCTL_BVALOVAL;
 
 #elif BOARD_TUD_RHPORT == 1
   // TODO: implement whatever this is
@@ -107,6 +107,10 @@ bool board_app_valid(void)
   uint32_t app_addr = board_get_app_start_address();
   uint32_t app_vector[2u] = { 0u, 0u };
   board_flash_read(app_addr, app_vector, 8u);
+
+    app_vector[0] -= 0x4;
+    // actually the stack grows backwards before used, and hence should be subtracted
+    // if it overflows, it's fine, as it will not pass the check
 
   // 1st word should be in SRAM region and aligned
   switch ((app_vector[0] & 0xFFFF0003u))
@@ -171,9 +175,32 @@ void board_app_jump(void)
   __HAL_RCC_GPIOK_CLK_DISABLE();
   // Lotsa GPIOs
 
-  HAL_RCC_DeInit();
-  SCB_DisableICache();
-  SCB_DisableDCache();
+	// Disable all interrupts
+	__disable_irq();
+
+	// Disable systick
+	SysTick->CTRL = 0;
+	SysTick->LOAD = 0;
+	SysTick->VAL = 0;
+
+	// Clear all NVIC registers
+	for (int i = 0; i < 8; i++)
+	{
+		// Clear interrupt enable
+		NVIC->ICER[i] = 0xFFFFFFFF;
+		// Clear interrupt pending
+		NVIC->ICPR[i] = 0xFFFFFFFF;
+	}
+
+	// Disable periphery clocks
+	HAL_DeInit();
+
+	// Re-enable all interrupts
+	__enable_irq();
+
+  // HAL_RCC_DeInit();
+  // SCB_DisableICache();
+  // SCB_DisableDCache();
 
   // Clear temporary boot address
   board_clear_temp_boot_addr();

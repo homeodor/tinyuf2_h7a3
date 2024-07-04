@@ -1,0 +1,5 @@
+{
+    "cmake.generator": "Ninja",
+    "cortex-debug.variableUseNaturalFormat": false,
+    "cmake.buildDirectory": "${workspaceFolder}/_build/atol_integration_stand"
+}
