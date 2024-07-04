@@ -12,6 +12,10 @@
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
+            "osx": {
+                "serverpath": "/Applications/SEGGER/JLink/JLinkGDBServerCLExe",
+                "armToolchainPath": "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/bin",
+            },
             "serverpath": "/usr/bin/JLinkGDBServerCLExe",
             "armToolchainPath": "/usr/share/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin",          
             "device": "STM32H7A3II",

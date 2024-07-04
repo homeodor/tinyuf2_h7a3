@@ -61,7 +61,11 @@ uint32_t board_get_app_start_address(void)
   }
   else
   {
+#if BOARD_QSPI_FLASH_EN
     return BOARD_QSPI_APP_ADDR;
+#else
+    return BOARD_PFLASH_APP_ADDR;
+#endif
   }
 }
 

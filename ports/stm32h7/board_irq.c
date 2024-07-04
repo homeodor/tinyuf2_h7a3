@@ -28,7 +28,7 @@ void OTG_FS_IRQHandler(void)
 
 void OTG_HS_IRQHandler(void)
 {
-  tud_int_handler(1);
+  tud_int_handler(0);
 }
 #endif // BUILD_NO_TINYUSB
 #endif // TINYUF2_SELF_UPDATE

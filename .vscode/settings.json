@@ -13,5 +13,6 @@
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.default.cppStandard": "",
-    "C_Cpp.default.cStandard": ""
+    "C_Cpp.default.cStandard": "",
+    "cortex-debug.variableUseNaturalFormat": false
 }
