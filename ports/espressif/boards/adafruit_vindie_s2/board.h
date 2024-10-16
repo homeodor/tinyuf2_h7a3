@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef CIRCUITART_ZERO_S3_H_
-#define CIRCUITART_ZERO_S3_H_
+#ifndef ADAFRUIT_VINDIE_S2_H_
+#define ADAFRUIT_VINDIE_S2_H_
 
 //--------------------------------------------------------------------+
 // Button
@@ -36,14 +36,14 @@
 
 // GPIO that implement 1-bit memory with RC components which hold the
 // pin value long enough for double reset detection.
-#define PIN_DOUBLE_RESET_RC   45
+#define PIN_DOUBLE_RESET_RC   17
 
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
 
 // GPIO connected to Neopixel data
-#define NEOPIXEL_PIN          47
+#define NEOPIXEL_PIN          33
 
 // Brightness percentage from 1 to 255
 #define NEOPIXEL_BRIGHTNESS   0x10
@@ -53,54 +53,24 @@
 
 // LED for indicator and writing flash
 // If not defined neopixel will be use for flash writing instead
-#define LED_PIN               46
+#define LED_PIN               18
 #define LED_STATE_ON          1
-
-//--------------------------------------------------------------------+
-// TFT
-//--------------------------------------------------------------------+
-
-#define CONFIG_LCD_TYPE_ST7789V
-
-#define DISPLAY_PIN_MISO      -1 // required if use CONFIG_LCD_TYPE_AUTO
-#define DISPLAY_PIN_MOSI      35
-#define DISPLAY_PIN_SCK       36
-
-#define DISPLAY_PIN_CS        39
-#define DISPLAY_PIN_DC        5
-#define DISPLAY_PIN_RST       40
-
-#define DISPLAY_PIN_BL        18
-#define DISPLAY_BL_ON          0  // GPIO state to enable back light
-
-//#define DISPLAY_PIN_POWER      -1
-//#define DISPLAY_POWER_ON       0  // GPIO state to enable TFT
-
-#define DISPLAY_WIDTH         320
-#define DISPLAY_HEIGHT        172
-
-#define DISPLAY_COL_OFFSET    34
-#define DISPLAY_ROW_OFFSET    0
-
-// Memory Data Access Control & // Vertical Scroll Start Address
-#define DISPLAY_MADCTL        (TFT_MADCTL_MX)
-#define DISPLAY_VSCSAD        0
-
-#define DISPLAY_TITLE         "Zero S3 TFT"
 
 //--------------------------------------------------------------------+
 // USB UF2
 //--------------------------------------------------------------------+
 
-#define USB_VID                  0x303A
-#define USB_PID                  0x80DC
-
-#define USB_MANUFACTURER         "CircuiArt"
-#define USB_PRODUCT              "ZeroS3"
+#define USB_VID                  0x239A
+#define USB_PID                  0x015F
+#define USB_MANUFACTURER         "Adafruit"
+#define USB_PRODUCT              "Vindie S2"
 
 #define UF2_PRODUCT_NAME         USB_MANUFACTURER " " USB_PRODUCT
-#define UF2_BOARD_ID             "ESP32S3-Zero-R2"
-#define UF2_VOLUME_LABEL         "ZEROS3BOOT"
-#define UF2_INDEX_URL            "https://github.com/CircuitART"
+#define UF2_BOARD_ID             "Vindie-S2-revA"
+#define UF2_VOLUME_LABEL         "VNDS2BOOT"
+#define UF2_INDEX_URL            "https://www.adafruit.com/product/5901"
+
+// Use favicon
+#define TINYUF2_FAVICON_HEADER   "favicon_adafruit_256.h"
 
 #endif

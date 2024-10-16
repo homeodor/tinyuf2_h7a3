@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 Ha Thach (tinyusb.org) for Adafruit Industries
+ * Copyright (c) 2024 Bill Sideris, Independently providing these changes
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef CIRCUITART_ZERO_S3_H_
-#define CIRCUITART_ZERO_S3_H_
+#ifndef LILYGO_TWATCH_S3_H_
+#define LILYGO_TWATCH_S3_H_
 
 //--------------------------------------------------------------------+
 // Button
@@ -32,29 +32,17 @@
 // Enter UF2 mode if GPIO is pressed while 2nd stage bootloader indicator
 // is on e.g RGB = Purple. If it is GPIO0, user should not hold this while
 // reset since that will instead run the 1st stage ROM bootloader
-#define PIN_BUTTON_UF2        0
+#define PIN_BUTTON_UF2       0
 
 // GPIO that implement 1-bit memory with RC components which hold the
 // pin value long enough for double reset detection.
-#define PIN_DOUBLE_RESET_RC   45
+// #define PIN_DOUBLE_RESET_RC   38
 
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
 
-// GPIO connected to Neopixel data
-#define NEOPIXEL_PIN          47
-
-// Brightness percentage from 1 to 255
-#define NEOPIXEL_BRIGHTNESS   0x10
-
-// Number of neopixels
-#define NEOPIXEL_NUMBER       4
-
-// LED for indicator and writing flash
-// If not defined neopixel will be use for flash writing instead
-#define LED_PIN               46
-#define LED_STATE_ON          1
+// No LED onboard.
 
 //--------------------------------------------------------------------+
 // TFT
@@ -63,44 +51,45 @@
 #define CONFIG_LCD_TYPE_ST7789V
 
 #define DISPLAY_PIN_MISO      -1 // required if use CONFIG_LCD_TYPE_AUTO
-#define DISPLAY_PIN_MOSI      35
-#define DISPLAY_PIN_SCK       36
+#define DISPLAY_PIN_MOSI      13
+#define DISPLAY_PIN_SCK       18
 
-#define DISPLAY_PIN_CS        39
-#define DISPLAY_PIN_DC        5
-#define DISPLAY_PIN_RST       40
+#define DISPLAY_PIN_CS        12
+#define DISPLAY_PIN_DC        38
+#define DISPLAY_PIN_RST       -1
 
-#define DISPLAY_PIN_BL        18
-#define DISPLAY_BL_ON          0  // GPIO state to enable back light
+#define DISPLAY_PIN_BL        45
+#define DISPLAY_BL_ON          1  // GPIO state to enable back light
 
-//#define DISPLAY_PIN_POWER      -1
-//#define DISPLAY_POWER_ON       0  // GPIO state to enable TFT
+#define DISPLAY_PIN_POWER     -1
+#define DISPLAY_POWER_ON       1  // GPIO state to enable TFT
 
-#define DISPLAY_WIDTH         320
-#define DISPLAY_HEIGHT        172
+#define DISPLAY_WIDTH         240
+#define DISPLAY_HEIGHT        240
 
-#define DISPLAY_COL_OFFSET    34
+#define DISPLAY_COL_OFFSET    0
 #define DISPLAY_ROW_OFFSET    0
 
 // Memory Data Access Control & // Vertical Scroll Start Address
-#define DISPLAY_MADCTL        (TFT_MADCTL_MX)
-#define DISPLAY_VSCSAD        0
+#define DISPLAY_MADCTL        (TFT_MADCTL_MX | TFT_MADCTL_MY | TFT_MADCTL_MV)
+#define DISPLAY_VSCSAD        80
+// Display rotated 90 degrees
 
-#define DISPLAY_TITLE         "Zero S3 TFT"
+#define DISPLAY_TITLE         "T-Watch-S3"
 
 //--------------------------------------------------------------------+
 // USB UF2
 //--------------------------------------------------------------------+
 
 #define USB_VID                  0x303A
-#define USB_PID                  0x80DC
+#define USB_PID                  0x821D
 
-#define USB_MANUFACTURER         "CircuiArt"
-#define USB_PRODUCT              "ZeroS3"
+#define USB_MANUFACTURER         "LILYGO"
+#define USB_PRODUCT              "T-Watch-S3"
 
 #define UF2_PRODUCT_NAME         USB_MANUFACTURER " " USB_PRODUCT
-#define UF2_BOARD_ID             "ESP32S3-Zero-R2"
-#define UF2_VOLUME_LABEL         "ZEROS3BOOT"
-#define UF2_INDEX_URL            "https://github.com/CircuitART"
+#define UF2_BOARD_ID             "ESP32S3-T-Watch-S3"
+#define UF2_VOLUME_LABEL         "TWS3BOOT"
+#define UF2_INDEX_URL            "https://github.com/Xinyuan-LilyGO/TTGO_TWatch_Library/tree/t-watch-s3"
 
 #endif
